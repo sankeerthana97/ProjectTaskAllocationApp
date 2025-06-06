@@ -204,7 +204,7 @@ namespace ProjectTaskAllocationApp.Controllers
             if (project == null)
                 return NotFound();
 
-            task.ProjectId = projectId.ToString();
+            task.ProjectId = projectId;
             task.Status = ProjectTaskStatus.ToDo;
 
             _context.Tasks.Add(task);
@@ -286,7 +286,7 @@ namespace ProjectTaskAllocationApp.Controllers
         public async Task<IActionResult> GetProjectTasks(int projectId)
         {
             var tasks = await _context.Tasks
-                .Where(t => t.ProjectId == projectId.ToString())
+                .Where(t => t.ProjectId == projectId)
                 .Include(t => t.Employee)
                 .Include(t => t.Project)
                 .OrderBy(t => t.Priority)

@@ -50,13 +50,13 @@ namespace ProjectTaskAllocationApp.Controllers
             }
 
             var timelineEvents = await _context.ProjectTimeline
-                .Where(t => t.ProjectId == projectId.ToString())
+                .Where(t => t.ProjectId == projectId)
                 .OrderBy(t => t.Timestamp)
                 .Select(t => new
                 {
                     t.Event,
                     t.Description,
-                    t.Timestamp,
+                    t.Timestamp = t.Timestamp.ToString("yyyy-MM-dd HH:mm:ss"),
                     t.Color,
                     t.ChangedBy,
                     t.Comments

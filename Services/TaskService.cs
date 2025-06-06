@@ -86,6 +86,96 @@ namespace ProjectTaskAllocationApp.Services
                 _performanceService.UpdatePerformance(employee, true);
                 await _context.SaveChangesAsync();
             }
+
+            // Add task history
+            await AddTaskHistoryAsync(task, ProjectTaskStatus.Done, userId, "Task accepted and marked as done");
+        }
+
+        public async Task RejectTaskAsync(ProjectTask task, string userId, string reason)
+        {
+            if (!task.CanReject())
+                throw new InvalidOperationException("Task cannot be rejected");
+
+            task.Status = ProjectTaskStatus.InProgress;
+            task.ReviewComments = reason;
+            
+            // Update employee performance
+            var employee = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == task.EmployeeId);
+
+            if (employee != null)
+            {
+                _performanceService.UpdatePerformance(employee, false);
+                await _context.SaveChangesAsync();
+            }
+
+            // Add task history
+            await AddTaskHistoryAsync(task, ProjectTaskStatus.InProgress, userId, $"Task rejected: {reason}");
+        }
+
+        public async Task UpdateProjectStatusAsync(int projectId)
+        {
+            var project = await _context.Projects.FindAsync(projectId);
+            if (project == null) return;
+
+            var tasks = await _context.Tasks
+                .Where(t => t.ProjectId == projectId)
+                .ToListAsync();
+
+            var completedTasks = tasks.Count(t => t.Status == ProjectTaskStatus.Done);
+            var totalTasks = tasks.Count;
+
+            if (totalTasks > 0)
+            {
+                var completionPercentage = (double)completedTasks / totalTasks * 100;
+                project.CompletionPercentage = (int)completionPercentage;
+
+                if (completionPercentage >= 100)
+                {
+                    project.Status = ProjectStatus.Completed;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public bool IsValidStatusTransition(ProjectTask task, ProjectTaskStatus newStatus)
+        {
+            switch (task.Status)
+            {
+                case ProjectTaskStatus.New:
+                    return newStatus == ProjectTaskStatus.InProgress;
+                case ProjectTaskStatus.InProgress:
+                    return newStatus == ProjectTaskStatus.Review || newStatus == ProjectTaskStatus.New;
+                case ProjectTaskStatus.Review:
+                    return newStatus == ProjectTaskStatus.Done || newStatus == ProjectTaskStatus.InProgress;
+                case ProjectTaskStatus.Done:
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        public async Task HandleStatusChangeEmails(ProjectTask task, ProjectTaskStatus oldStatus, ProjectTaskStatus newStatus)
+        {
+            var project = await _context.Projects.FindAsync(task.ProjectId);
+            var assignedTo = await _context.Users.FindAsync(task.AssignedToId);
+            var employee = await _context.Users.FindAsync(task.EmployeeId);
+
+            if (project == null || assignedTo == null || employee == null) return;
+
+            if (oldStatus == ProjectTaskStatus.New && newStatus == ProjectTaskStatus.InProgress)
+            {
+                await _emailService.SendTaskAssignedEmailAsync(assignedTo, task, project);
+            }
+            else if (oldStatus == ProjectTaskStatus.Review && newStatus == ProjectTaskStatus.Done)
+            {
+                await _emailService.SendTaskAcceptedEmailAsync(employee, task, project);
+            }
+            else if (oldStatus == ProjectTaskStatus.Review && newStatus == ProjectTaskStatus.InProgress)
+            {
+                await _emailService.SendTaskRejectedEmailAsync(employee, task, project);
+            }
         }
 
         public async Task RejectTaskAsync(ProjectTask task, string userId, string reason)
@@ -110,6 +200,9 @@ namespace ProjectTaskAllocationApp.Services
                     "Task Rejected",
                     $"<h3>Task Rejected</h3>\n                    <p>Your task has been rejected: {task.Name}</p>\n                    <p>Project: {task.Project.Name}</p>\n                    <p>Reason: {reason}</p>\n                    <p>Please make corrections and resubmit.</p>");
             }
+
+            // Add task history
+            await AddTaskHistoryAsync(task, ProjectTaskStatus.InProgress, userId, $"Task rejected: {reason}");
         }
     }
 }

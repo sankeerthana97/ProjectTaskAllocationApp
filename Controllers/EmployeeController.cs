@@ -134,7 +134,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 return NotFound();
 
             employee.Name = model.Name;
-            employee.Skills = string.Join(",",Request.Skills);
+            employee.Skills = model.Skills != null ? string.Join(",", model.Skills) : employee.Skills;
             employee.Experience = model.Experience;
             employee.Bio = model.Bio;
 

@@ -133,20 +133,23 @@ namespace ProjectTaskAllocationApp.Controllers
                 return Unauthorized();
             }
 
-            if (!_taskService.IsValidStatusTransition(task.Status, model.NewStatus))
+            var oldStatus = task.Status;
+            var newStatus = model.NewStatus;
+
+            if (!_taskService.IsValidStatusTransition(task, newStatus))
             {
-                return BadRequest($"Invalid status transition from {task.Status} to {model.NewStatus}");
+                return BadRequest($"Invalid status transition from {oldStatus} to {newStatus}");
             }
 
-            task.Status = (ProjectTaskStatus)NewStatus;
+            task.Status = newStatus;
             task.UpdatedAt = DateTime.UtcNow;
 
             // Create task history entry
             var history = new TaskHistory
             {
                 TaskId = task.Id,
-                PreviousStatus = task.Status,
-                task.Status = (ProjectTaskStatus)NewStatus,
+                PreviousStatus = oldStatus,
+                Status = newStatus,
                 ChangedBy = userId,
                 ChangedAt = DateTime.UtcNow,
                 Comments = model.Comments
@@ -156,7 +159,7 @@ namespace ProjectTaskAllocationApp.Controllers
             await _context.SaveChangesAsync();
 
             // Send appropriate email based on status change
-            await _taskService.HandleStatusChangeEmails(task, model.NewStatus);
+            await _taskService.HandleStatusChangeEmails(task, oldStatus, newStatus);
 
             return Ok(task);
         }
@@ -192,7 +195,7 @@ namespace ProjectTaskAllocationApp.Controllers
 
     public class TaskStatusUpdate
     {
-        public TaskStatus NewStatus { get; set; }
+        public ProjectTaskStatus NewStatus { get; set; }
         public string Comments { get; set; }
     }
 }
