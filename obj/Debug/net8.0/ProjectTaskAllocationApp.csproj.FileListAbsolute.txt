@@ -1,0 +1,8 @@
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.csproj.AssemblyReference.cache
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.AssemblyInfoInputs.cache
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.AssemblyInfo.cs
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.csproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.RazorAssemblyInfo.cache
+C:\Users\HP\source\repos\ProjectTaskAllocationApp\obj\Debug\net8.0\ProjectTaskAllocationApp.RazorAssemblyInfo.cs

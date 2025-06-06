@@ -1,0 +1,41 @@
+# Build and publish folders
+bin/
+obj/
+*.user
+*.suo
+
+# Visual Studio
+.vs/
+*.vc.db
+*.vscode/
+
+# Entity Framework
+**/Migrations/*Designer.cs
+**/Migrations/*Snapshot.cs
+
+# User-specific files
+*.user
+*.sln.docstates
+
+# Log files
+*.log
+
+# npm packages
+node_modules/
+
+# Environment settings
+.env
+*.env
+
+# Database files
+*.mdf
+*.ldf
+*.db
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+.DS_Store
+
+
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Create New Project</h2>
+            </div>
+            <div class="card-body">
+                <form id="projectForm">
+                    <div class="row">
+                        <!-- Basic Information -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="requirements" class="form-label">Requirements</label>
+                                <textarea class="form-control" id="requirements" rows="4" required>
+                                    <!-- Project requirements will be loaded here -->
+                                </textarea>
+                                <small class="text-muted">Specify all technical and business requirements</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Critical">Critical</option>
+                                    <option value="Major">Major</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="endDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="estimatedHours" class="form-label">Estimated Hours</label>
+                                <input type="number" class="form-control" id="estimatedHours" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Selection -->
+                    <div class="mt-4">
+                        <h4>Assign Employees</h4>
+                        <div class="row">
+                            <!-- Employee Filters -->
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Filters</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Skills</label>
+                                            <input type="text" class="form-control" id="skillsFilter" placeholder="Filter by skills...">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Experience</label>
+                                            <input type="number" class="form-control" id="experienceFilter" min="0" placeholder="Minimum years">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Performance</label>
+                                            <input type="number" class="form-control" id="performanceFilter" min="0" max="100" placeholder="Minimum performance">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Workload</label>
+                                            <input type="number" class="form-control" id="workloadFilter" min="0" max="100" placeholder="Maximum workload">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Available Employees -->
+                            <div class="col-md-9">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Available Employees</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="employeeList">
+                                            <!-- Employees will be loaded by JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Create Project</button>
+                        <a href="/manager" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/manager-create-project.js"></script>
+</body>
+</html>
