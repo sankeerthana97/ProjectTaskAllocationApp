@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ProjectTaskAllocationApp.Controllers
 {
@@ -48,7 +50,7 @@ namespace ProjectTaskAllocationApp.Controllers
             }
 
             var timelineEvents = await _context.ProjectTimeline
-                .Where(t => t.ProjectId == projectId)
+                .Where(t => t.ProjectId == projectId.ToString())
                 .OrderBy(t => t.Timestamp)
                 .Select(t => new
                 {

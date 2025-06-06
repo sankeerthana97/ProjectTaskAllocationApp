@@ -7,6 +7,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ProjectTaskAllocationApp.Services;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
+
 
 namespace ProjectTaskAllocationApp.Controllers
 {
@@ -68,20 +71,20 @@ namespace ProjectTaskAllocationApp.Controllers
             return Ok(await _context.Tasks
                 .Include(t => t.Project)
                 .Include(t => t.AssignedTo)
-                .Where(t => t.Status == TaskStatus.Review)
+                .Where(t => t.Status == ProjectTaskStatus.Review)
                 .ToListAsync());
         }
 
         [HttpPost]
         [Authorize(Roles = "TeamLead")]
-        public async Task<IActionResult> CreateTask([FromBody] Task task)
+        public async Task<IActionResult> CreateTask([FromBody] ProjectTask task)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var employee = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == task.AssignedToId);
+            var employee = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == task.EmployeeId);
             if (employee == null)
             {
                 return BadRequest("Assigned employee not found");
@@ -92,7 +95,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 return BadRequest($"Employee {employee.Name} is overloaded (workload 100%)");
             }
 
-            task.Status = TaskStatus.ToDo;
+            task.Status = ProjectTaskStatus.ToDo;
             task.CreatedAt = DateTime.UtcNow;
             
             _context.Tasks.Add(task);
@@ -135,7 +138,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 return BadRequest($"Invalid status transition from {task.Status} to {model.NewStatus}");
             }
 
-            task.Status = model.NewStatus;
+            task.Status = (ProjectTaskStatus)NewStatus;
             task.UpdatedAt = DateTime.UtcNow;
 
             // Create task history entry
@@ -143,7 +146,7 @@ namespace ProjectTaskAllocationApp.Controllers
             {
                 TaskId = task.Id,
                 PreviousStatus = task.Status,
-                NewStatus = model.NewStatus,
+                task.Status = (ProjectTaskStatus)NewStatus,
                 ChangedBy = userId,
                 ChangedAt = DateTime.UtcNow,
                 Comments = model.Comments

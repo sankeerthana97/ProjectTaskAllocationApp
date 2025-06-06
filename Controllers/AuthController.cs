@@ -7,6 +7,8 @@ using System.Text;
 using ProjectTaskAllocationApp.Models;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using ProjectTaskAllocationApp.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectTaskAllocationApp.Controllers
 {

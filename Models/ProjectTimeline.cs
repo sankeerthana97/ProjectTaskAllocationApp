@@ -1,25 +1,28 @@
 using System;
 using System.Collections.Generic;
-
 namespace ProjectTaskAllocationApp.Models
 {
     public class ProjectTimeline
     {
         public int Id { get; set; }
-        public string ProjectId { get; set; }
-        public Project Project { get; set; }
+        public string ProjectId { get; set; } = string.Empty;
+        public Project Project { get; set; } = null!;
         public DateTime Date { get; set; }
-        public string Event { get; set; }
-        public string Description { get; set; }
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
-        public string Color { get; set; }
+        public string Event { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+        public ApplicationUser User { get; set; } = null!;
+        public string Color { get; set; } = string.Empty;
+
+        // Add missing properties for compatibility
+        public string ChangedBy { get; set; } = string.Empty;
+        public string Comments { get; set; } = string.Empty;
 
         public static ProjectTimeline CreateProjectCreatedEvent(Project project, ApplicationUser user)
         {
             return new ProjectTimeline
             {
-                ProjectId = project.Id,
+                ProjectId = project.Id.ToString(),
                 Date = project.CreatedAt,
                 Event = "Project Created",
                 Description = $"Project '{project.Name}' was created",
@@ -58,7 +61,7 @@ namespace ProjectTaskAllocationApp.Models
         {
             return new ProjectTimeline
             {
-                ProjectId = project.Id,
+                ProjectId = project.Id.ToString(),
                 Date = DateTime.UtcNow,
                 Event = "Project Status Changed",
                 Description = $"Project status changed to {project.Status}",
@@ -74,4 +77,4 @@ namespace ProjectTaskAllocationApp.Models
             };
         }
     }
-}
+} 

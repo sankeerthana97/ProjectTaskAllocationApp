@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjectTaskAllocationApp.Models;
+using ProjectTaskAllocationApp.Data;
 
 namespace ProjectTaskAllocationApp.Services
 {

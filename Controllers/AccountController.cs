@@ -5,6 +5,7 @@ using ProjectTaskAllocationApp.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ProjectTaskAllocationApp.Services;
+using ProjectTaskAllocationApp.Data;
 
 namespace ProjectTaskAllocationApp.Controllers
 {

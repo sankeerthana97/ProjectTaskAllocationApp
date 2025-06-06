@@ -5,6 +5,8 @@ using ProjectTaskAllocationApp.Models;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using ProjectTaskAllocationApp.Services;
+using ProjectTaskAllocationApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,8 @@ builder.Services.AddScoped<DataSeeder>();
 // Register EmailService
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmployeeAvailabilityService, EmployeeAvailabilityService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 // Register Performance and Workload Services
 builder.Services.AddScoped<PerformanceService>();

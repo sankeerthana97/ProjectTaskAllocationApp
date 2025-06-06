@@ -9,5 +9,6 @@ namespace ProjectTaskAllocationApp.Services
         Task<bool> CanAssignTaskAsync(ApplicationUser employee);
         Task<string> GetAvailabilityStatusAsync(ApplicationUser employee);
         Task<string> GetAvailabilityColorAsync(ApplicationUser employee);
+        
     }
 }

@@ -1,5 +1,4 @@
 using System;
-
 namespace ProjectTaskAllocationApp.Models
 {
     public class TaskHistory
@@ -11,6 +10,11 @@ namespace ProjectTaskAllocationApp.Models
         public string ChangedBy { get; set; }
         public string Comments { get; set; }
         public string Reason { get; set; }
+
+        // Added missing properties
+        public ProjectTaskStatus PreviousStatus { get; set; }
+        public ProjectTaskStatus NewStatus { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
         public ProjectTask Task { get; set; }
     }

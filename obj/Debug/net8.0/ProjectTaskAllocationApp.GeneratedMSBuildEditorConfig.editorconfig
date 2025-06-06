@@ -17,21 +17,21 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProjectTaskAllocationApp
 build_property.RootNamespace = ProjectTaskAllocationApp
-build_property.ProjectDir = C:\Users\HP\source\repos\ProjectTaskAllocationApp\
+build_property.ProjectDir = C:\Users\sadr\source\repos\ProjectTaskAllocationApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\HP\source\repos\ProjectTaskAllocationApp
+build_property.MSBuildProjectDirectory = C:\Users\sadr\source\repos\ProjectTaskAllocationApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/HP/source/repos/ProjectTaskAllocationApp/Views/Account/Login.cshtml]
+[C:/Users/sadr/source/repos/ProjectTaskAllocationApp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/HP/source/repos/ProjectTaskAllocationApp/Views/Account/Register.cshtml]
+[C:/Users/sadr/source/repos/ProjectTaskAllocationApp/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

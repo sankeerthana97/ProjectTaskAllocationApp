@@ -20,7 +20,7 @@ namespace ProjectTaskAllocationApp.Services
             _workloadService = workloadService;
         }
 
-        private async Task AddTaskHistoryAsync(ProjectTask task, ProjectTaskStatus newStatus, string userId, string comments = null)
+        private async Task AddTaskHistoryAsync(ProjectTask task, ProjectTaskStatus newStatus, string userId, string comments = null!)
         {
             var history = new TaskHistory
             {

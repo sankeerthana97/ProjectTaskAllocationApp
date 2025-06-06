@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using ProjectTaskAllocationApp.Models;
 
 namespace ProjectTaskAllocationApp.Services
 {

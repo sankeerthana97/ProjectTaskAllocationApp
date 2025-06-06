@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ProjectTaskAllocationApp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectTaskAllocationApp.Controllers
 {
@@ -48,7 +49,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 employee.Bio,
                 Performance = employee.Performance,
                 Workload = employee.Workload,
-                IsAvailable = _availabilityService.IsEmployeeAvailable(employee)
+                IsAvailable = _availabilityService.IsEmployeeAvailableAsync(employee)
             });
         }
 
@@ -66,7 +67,7 @@ namespace ProjectTaskAllocationApp.Controllers
                     e.Experience,
                     e.Performance,
                     e.Workload,
-                    IsAvailable = _availabilityService.IsEmployeeAvailable(e)
+                    IsAvailable = _availabilityService.IsEmployeeAvailableAsync(e)
                 })
                 .ToListAsync();
 
@@ -87,7 +88,7 @@ namespace ProjectTaskAllocationApp.Controllers
 
             if (!string.IsNullOrEmpty(skills))
             {
-                var skillList = skills.Split(',').Select(s => s.Trim()).ToList();
+                var skillList = skills.Split(new char[] { ',' },StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
                 query = query.Where(e => e.Skills.Any(s => skillList.Contains(s)));
             }
 
@@ -115,7 +116,7 @@ namespace ProjectTaskAllocationApp.Controllers
                     e.Experience,
                     e.Performance,
                     e.Workload,
-                    IsAvailable = _availabilityService.IsEmployeeAvailable(e)
+                    IsAvailable = _availabilityService.IsEmployeeAvailableAsync(e)
                 })
                 .ToListAsync();
 
@@ -133,7 +134,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 return NotFound();
 
             employee.Name = model.Name;
-            employee.Skills = model.Skills;
+            employee.Skills = string.Join(",",Request.Skills);
             employee.Experience = model.Experience;
             employee.Bio = model.Bio;
 
@@ -147,7 +148,7 @@ namespace ProjectTaskAllocationApp.Controllers
                 employee.Bio,
                 Performance = employee.Performance,
                 Workload = employee.Workload,
-                IsAvailable = _availabilityService.IsEmployeeAvailable(employee)
+                IsAvailable = _availabilityService.IsEmployeeAvailableAsync(employee)
             });
         }
     }

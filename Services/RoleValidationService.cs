@@ -2,6 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using ProjectTaskAllocationApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProjectTaskAllocationApp.Services
 {
